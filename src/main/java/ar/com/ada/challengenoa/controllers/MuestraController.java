@@ -21,7 +21,7 @@ public class MuestraController {
     
    private MuestraService muestraService;
 
-    @PostMapping("/empleados")
+    @PostMapping("/muestras")
     public ResponseEntity<?> crearEmpleada(@RequestBody InfoMuestraNueva muestraInfo) {
         GenericResponse respuesta = new GenericResponse();
 
