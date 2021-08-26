@@ -20,7 +20,7 @@ public class BoyaController {
     private BoyaService service;
     
     @PostMapping("/boyas") //permite la creación boyas
-    public ResponseEntity<?> crearMuestra(@RequestBody InfoBoyaNueva InfoBoyaNueva) {
+    public ResponseEntity<?> crearMuestra(@RequestBody InfoBoyaNueva InfoBoyaNueva, Boya boya) {
 
         GenericResponse respuesta = new GenericResponse();
 

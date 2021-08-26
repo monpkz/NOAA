@@ -14,17 +14,6 @@ public class BoyaService {
     BoyaRepository repo;
 
     
-    public void crearBoya(Integer boyaId, Double latitudInstalacion, Double longitudInstalacion) {
-
-        Boya boya = new Boya(); 
-        boya.setBoyaId(boyaId);
-        boya.setLatitudInstalacion(latitudInstalacion);
-        boya.setLongitudInstalacion(longitudInstalacion);
-
-        repo.save(boya);
-
-        
-    } 
 
     public List<Boya> traerTodas(){
         return repo.findAll();
@@ -38,6 +27,16 @@ public class BoyaService {
 
         Boya boya = this.buscarBoyaId(Id);
         boya.setEstadoColorLuz(colorBoyaRequest.estado);
+        repo.save(boya);
+
+    }
+
+    public void crearBoya(Integer boyaId, Double latitudInstalacion, Double longitudInstalacion) {
+        Boya boya = new Boya(); 
+        boya.setBoyaId(boyaId);
+        boya.setLatitudInstalacion(latitudInstalacion);
+        boya.setLongitudInstalacion(longitudInstalacion);
+
         repo.save(boya);
 
     }
