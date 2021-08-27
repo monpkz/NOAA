@@ -1,4 +1,4 @@
-package ar.com.ada.challengenoa.entities;
+package ar.com.ada.api.NOAAchallenge.entities;
 
 import java.util.*;
 

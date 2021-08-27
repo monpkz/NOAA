@@ -1,4 +1,4 @@
-package ar.com.ada.challengenoa.controllers;
+package ar.com.ada.api.NOAAchallenge.controllers;
 
 import java.util.List;
 
@@ -7,28 +7,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import ar.com.ada.challengenoa.entities.*;
-import ar.com.ada.challengenoa.models.request.ColorBoyaRequest;
-import ar.com.ada.challengenoa.models.request.InfoBoyaNueva;
-import ar.com.ada.challengenoa.models.request.response.GenericResponse;
-import ar.com.ada.challengenoa.services.BoyaService;
+import ar.com.ada.api.NOAAchallenge.entities.*;
+import ar.com.ada.api.NOAAchallenge.models.request.ColorBoyaRequest;
+import ar.com.ada.api.NOAAchallenge.models.request.InfoBoyaNueva;
+import ar.com.ada.api.NOAAchallenge.models.response.GenericResponse;
+import ar.com.ada.api.NOAAchallenge.services.BoyaService;
 
 @RestController
 public class BoyaController {
 
     @Autowired
-    private BoyaService service;
+    BoyaService service;
     
     @PostMapping("/boyas") //permite la creación boyas
-    public ResponseEntity<?> crearMuestra(@RequestBody InfoBoyaNueva InfoBoyaNueva, Boya boya) {
+    public ResponseEntity<GenericResponse> crearBoya(@RequestBody InfoBoyaNueva InfoBoyaNueva) {
+        Boya boya = service.crearBoya(InfoBoyaNueva.longitudInstalacion, InfoBoyaNueva.latitudInstalacion);
 
         GenericResponse respuesta = new GenericResponse();
 
-        service.crearBoya(boya);
-
         respuesta.isOk = true;
-        respuesta.id = boya.getBoyaId();
         respuesta.message = "La boya fue creada con exito.";
+        respuesta.id = boya.getBoyaId();
 
         return ResponseEntity.ok(respuesta);
     }
@@ -47,7 +46,7 @@ public class BoyaController {
     }
 
     @PutMapping("/boya/{id}") // que actualice SOLO el color de luz de la boya. El request esperado será:
-    public ResponseEntity<GenericResponse> actualizar (@PathVariable Integer id, @RequestBody ColorBoyaRequest ColorBoya){
+    public ResponseEntity<GenericResponse> actualizar(@PathVariable Integer id, @RequestBody ColorBoyaRequest ColorBoya){
     
         service.actualizar(id, ColorBoya);
         GenericResponse respuesta = new GenericResponse();

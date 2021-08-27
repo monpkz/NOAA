@@ -1,13 +1,13 @@
-package ar.com.ada.challengenoa;
+package ar.com.ada.api.NOAAchallenge;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChallengenoaApplication {
+public class NOAAchallengeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChallengenoaApplication.class, args);
+		SpringApplication.run(NOAAchallengeApplication.class, args);
 	}
 
 }

@@ -1,6 +1,6 @@
-package ar.com.ada.challengenoa.models.request;
+package ar.com.ada.api.NOAAchallenge.models.request;
 
-import ar.com.ada.challengenoa.entities.Boya.ColorBoyaEnum;
+import ar.com.ada.api.NOAAchallenge.entities.Boya.ColorBoyaEnum;
 
 public class ColorBoyaRequest {
     public ColorBoyaEnum estado;

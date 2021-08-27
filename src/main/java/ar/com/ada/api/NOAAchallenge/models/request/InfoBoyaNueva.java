@@ -1,7 +1,7 @@
-package ar.com.ada.challengenoa.models.request;
+package ar.com.ada.api.NOAAchallenge.models.request;
 
 public class InfoBoyaNueva {
-    public Integer boyaId;
+    
     public Double longitudInstalacion;
     public Double latitudInstalacion;
 }

@@ -1,4 +1,4 @@
-package ar.com.ada.challengenoa.models.request.response;
+package ar.com.ada.api.NOAAchallenge.models.response;
 
 public class GenericResponse {
 

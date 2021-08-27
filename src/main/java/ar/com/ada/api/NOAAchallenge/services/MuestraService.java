@@ -1,4 +1,4 @@
-package ar.com.ada.challengenoa.services;
+package ar.com.ada.api.NOAAchallenge.services;
 
 import org.springframework.stereotype.Service;
 
