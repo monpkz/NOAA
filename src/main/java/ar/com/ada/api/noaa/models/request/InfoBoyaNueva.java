@@ -1,4 +1,4 @@
-package ar.com.ada.api.NOAAchallenge.models.request;
+package ar.com.ada.api.noaa.models.request;
 
 public class InfoBoyaNueva {
     

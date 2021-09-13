@@ -8,10 +8,10 @@
 		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ar.com.ada.challengenoa</groupId>
-	<artifactId>challengenoa</artifactId>
+	<groupId>ar.com.ada.api</groupId>
+	<artifactId>noaa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>challengenoa</name>
+	<name>noaa</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>

@@ -1,13 +1,12 @@
-package ar.com.ada.api.NOAAchallenge.services;
+package ar.com.ada.api.noaa.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.ada.api.NOAAchallenge.entities.Boya;
-import ar.com.ada.api.NOAAchallenge.models.request.ColorBoyaRequest;
-import ar.com.ada.api.NOAAchallenge.repos.BoyaRepository;
+import ar.com.ada.api.noaa.entities.Boya;
+import ar.com.ada.api.noaa.repos.BoyaRepository;
 
 
 
@@ -22,11 +21,14 @@ public class BoyaService {
         boya.setLatitudInstalacion(latitudInstacion);
         boya.setLongitudInstalacion(longitudInstalacion);
 
-        repo.save(boya);
+        guardarBoya(boya);
         return boya;
 
     }
     
+    public void guardarBoya(Boya boya) {
+        repo.save(boya);
+    }
 
     public List<Boya> traerTodas(){
         return repo.findAll();
@@ -36,12 +38,12 @@ public class BoyaService {
         return repo.findByBoyaId(id);
     }
 
-    public void actualizar(Integer Id, ColorBoyaRequest colorBoyaRequest) {
+    public Boya actualizarBoyaColor(Integer id, String colorLuz) {
 
-        Boya boya = this.buscarBoyaId(Id);
-        boya.setEstadoColorLuz(colorBoyaRequest.estado);
-        repo.save(boya);
-
+        Boya boya = buscarBoyaId(id);
+        boya.setColorLuz(colorLuz);
+        guardarBoya(boya);
+        return boya;
     }
 
 
