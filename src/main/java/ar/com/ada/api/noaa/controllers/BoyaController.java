@@ -13,7 +13,6 @@ import ar.com.ada.api.noaa.models.request.InfoBoyaNueva;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
 import ar.com.ada.api.noaa.services.BoyaService;
 
-
 @RestController
 public class BoyaController {
 
@@ -40,28 +39,28 @@ public class BoyaController {
     }
 
     @GetMapping("/boyas/{id}") // que devuelva la info de una boya en particular(SIN las muestras)
-    public ResponseEntity<Boya> getBoyaId(@PathVariable Integer id) {
+    public ResponseEntity<Boya> buscarBoyaId(@PathVariable Integer id) {
         Boya boya = service.buscarBoyaId(id);
 
         return ResponseEntity.ok(boya);
     }
 
-    @PutMapping("/boyas/{id}") // que actualice SOLO el color de luz de la boya. El request esperado será:
-    public ResponseEntity<GenericResponse> actualizarBoyaColor(@PathVariable Integer id, @RequestBody ActualizarBoyaColor colorLuz){
-        
-        
-        Boya boyaActualizada = service.actualizarBoyaColor(id, colorLuz.color);
-        
-        if (boyaActualizada == null){
-            return ResponseEntity.notFound().build();
-        }   
-        
+    @PutMapping("/boyas/{id}") // actualice SOLO el color de luz de la boya. El request esperado será:
+    public ResponseEntity<GenericResponse> actualizarBoyaColor(@PathVariable Integer id,
+            @RequestBody ActualizarBoyaColor colorLuz) {
         GenericResponse respuesta = new GenericResponse();
-        respuesta.isOk = true;
-        respuesta.message = "Color de boya actualizado.";
-        respuesta.id = boyaActualizada.getBoyaId();
 
-        return ResponseEntity.ok(respuesta);
+        if (service.actualizarBoyaColor(id, colorLuz.colorLuz)) {
+            respuesta.isOk = true;
+            respuesta.message = "Color de boya actualizado con exito.";
+            respuesta.id = id;
+
+            return ResponseEntity.ok(respuesta);
+        } else {
+            respuesta.isOk = false;
+            respuesta.message = "El id ingresado no existe.";
+            return ResponseEntity.badRequest().body(respuesta);
+            
         }
-
+    }
 }

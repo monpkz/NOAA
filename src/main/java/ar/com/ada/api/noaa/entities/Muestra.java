@@ -45,7 +45,9 @@ public class Muestra {
 
     public void setBoya(Boya boya) {
         this.boya = boya;
-    }//Nota 1: una boya genera varias muestras, y una muestra corresponde solo a una boya.
+        this.boya.agregarMuestra(this);
+    }// Nota 1: una boya genera varias muestras, y una muestra corresponde solo a una
+     // boya.
 
     public Date getHorario() {
         return horarioMuestra;
@@ -87,4 +89,23 @@ public class Muestra {
         this.alturaNivelMar = alturaNivelMar;
     }
 
+
+    /*
+     * ROJO: Marea peligrosa
+     * AMARILLO: Advertencia de marea peligrosa
+     * VERDE: todo Ok
+     * AZUL: indefinido*/
+     
+    public String obtenerColor(Muestra muestra) {
+
+        if (muestra.getAlturaNivelMar() <= -50 && muestra.getAlturaNivelMar() > 50) {
+            return "ROJO";
+        }
+        if (muestra.getAlturaNivelMar() < -100 && muestra.getAlturaNivelMar() > 100) {
+            return "AMARILLO";
+        } 
+        else {
+            return "VERDE";
+        } 
+    }
 }

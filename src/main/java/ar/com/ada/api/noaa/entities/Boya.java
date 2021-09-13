@@ -5,9 +5,6 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 
 @Entity
 @Table(name = "boya")
@@ -29,7 +26,6 @@ public class Boya {
 
     @OneToMany(mappedBy = "boya", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Muestra> muestras = new ArrayList<>();
     
     public Integer getBoyaId() {
@@ -76,22 +72,6 @@ public class Boya {
         this.muestras.add(muestra);
     }
 
-    /*ROJO: Marea peligrosa
-    AMARILLO: Advertencia de marea peligrosa
-    VERDE: todo Ok
-    AZUL: indefinido*/
-    public String obtenerColor(Double nivelMar) {
-        colorLuz = "VERDE";
-        
-        if (Math.abs(nivelMar) >= 50 || Math.abs(nivelMar) <= -50) {
-            return colorLuz = "AMARILLO";
-        } else if (Math.abs(nivelMar) >= 100 || Math.abs(nivelMar) <= -100) {
-            return colorLuz = "ROJO";
-        }
-
-        return colorLuz;
-        
-    }
 
    
 

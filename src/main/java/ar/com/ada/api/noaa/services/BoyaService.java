@@ -38,59 +38,15 @@ public class BoyaService {
         return repo.findByBoyaId(id);
     }
 
-    public Boya actualizarBoyaColor(Integer id, String colorLuz) {
+    public boolean actualizarBoyaColor(Integer id, String colorLuz) {
 
         Boya boya = buscarBoyaId(id);
+        if(boya!=null){
         boya.setColorLuz(colorLuz);
         guardarBoya(boya);
-        return boya;
-    }
-
-
-    /*public boya obtenerPorBoyaId(Integer id){
-        return repo.findAllById(id);
-    }
-
-
-   /* ACTUALIZAR PUT DE BOYA CAMBIO DE LUZ // arreglando para agregarlo al codigo.
-      public Boya actualizarBoyaLuz(Integer boyaId, ColorBoyaEnum estado) {
-
-        Boya boya = new Boya();
-
-        boya = boyaService.obtenerPorBoyaId(boyaId);
-
-        switch (faroStatus) {
-
-            case AZUL:
-
-                boya.setFaroStatusId(faroStatus);
-                boyaRepo.save(boya);
-                break;
-
-            case VERDE:
-
-                boya.setFaroStatusId(faroStatus);
-                boyaRepo.save(boya);
-                break;
-
-            case AMARILLO:
-
-                boya.setFaroStatusId(faroStatus);
-                boyaRepo.save(boya);
-                break;
-
-            case ROJO:
-
-                boya.setFaroStatusId(faroStatus);
-                boyaRepo.save(boya);
-                break;
-
-            default:
-                break;
+        return true;
         }
-
-        return boya;
-
-    }*/
+        return false;
+    }
 
 }
