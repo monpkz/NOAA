@@ -17,6 +17,7 @@ import ar.com.ada.api.noaa.entities.Boya;
 import ar.com.ada.api.noaa.entities.Muestra;
 import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
+import ar.com.ada.api.noaa.models.response.MuestraMinimaResponse;
 import ar.com.ada.api.noaa.models.response.MuestraPorColor;
 import ar.com.ada.api.noaa.models.response.MuestraResponse;
 import ar.com.ada.api.noaa.services.BoyaService;
@@ -91,26 +92,37 @@ public class MuestraController {
         return ResponseEntity.ok(service.traerMuestrasPorColor(color.toUpperCase()));
     }
 
+    /*
+     * : que devuelva la muestra donde la altura nivel del mar sea la minima para
+     * una boya en particular en este formato JSON(informar el horario en
+     * que ocurrió)
+     */
+    @GetMapping("/muestras/minima/{idBoya}")
+    public ResponseEntity<MuestraMinimaResponse> muestraAlturaMinima(@PathVariable Integer idBoya){
+        Muestra muestraMinima= service.MuestraAlturaMinima(idBoya);
+        
+        MuestraMinimaResponse muestraMinimaResponse= new MuestraMinimaResponse();
+
+        muestraMinimaResponse.alturaNivelDelMarMinima=muestraMinima.getAlturaNivelMar();
+        muestraMinimaResponse.color=muestraMinima.getBoya().getColorLuz();
+        muestraMinimaResponse.horario=muestraMinima.getHorarioMuestra();
+
+        return ResponseEntity.ok(muestraMinimaResponse);
+    }
+
+    // EPICBONUS
+    /*
+     * se ha comenzado a hacer un plan de contingencia para los casos que seamos
+     * atacados por Monstruos Gigantes o Naves Alienígenas marítimas. Lo que NOAA
+     * está pidiendo es armar un sistema de alerta que nos avise si una anomalía ha
+     * sucedido con las boyas. Este sistema deberá devolver un resultado diferente
+     * dependiendo de las siguientes consignas: A) Para una boya en particular, si
+     * se mantuvo en un lapso de 10 minutos a niveles de 200metros absolutos(o sea
+     * -200 o +200) por 10 minutos, ALERTA DE KAIJU (Monstruo Gigante como GODZILLA)
+     * B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la
+     * diferencia de altura entre ambas es de +500 : ALERTA DE IMPACTO (Posible
+     * meteorito o Nave Alienígena que da brincos en el agua)
+     */
+    // @GetMapping("api/muestras/anomalias/{idBoya}")
+
 }
-
-/*
- * : que devuelva la muestra donde la altura nivel del mar sea la minima para
- * una boya en particular particular en este formato JSON(informar el horario en
- * que ocurrió)
- */
-// @GetMapping("/muestras/minima/{idBoya}")
-
-// EPICBONUS
-/*
- * se ha comenzado a hacer un plan de contingencia para los casos que seamos
- * atacados por Monstruos Gigantes o Naves Alienígenas marítimas. Lo que NOAA
- * está pidiendo es armar un sistema de alerta que nos avise si una anomalía ha
- * sucedido con las boyas. Este sistema deberá devolver un resultado diferente
- * dependiendo de las siguientes consignas: A) Para una boya en particular, si
- * se mantuvo en un lapso de 10 minutos a niveles de 200metros absolutos(o sea
- * -200 o +200) por 10 minutos, ALERTA DE KAIJU (Monstruo Gigante como GODZILLA)
- * B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la
- * diferencia de altura entre ambas es de +500 : ALERTA DE IMPACTO (Posible
- * meteorito o Nave Alienígena que da brincos en el agua)
- */
-// @GetMapping("api/muestras/anomalias/{idBoya}")
