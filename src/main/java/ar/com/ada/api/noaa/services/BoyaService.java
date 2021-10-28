@@ -34,13 +34,13 @@ public class BoyaService {
         return repo.findAll();
     }
 
-    public Boya buscarBoyaId(Integer boyaId){
+    public Boya traerById(Integer boyaId){
         return repo.findByBoyaId(boyaId);
     }
 
     public boolean actualizarBoyaColor(Integer id, String colorLuz) {
 
-        Boya boya = buscarBoyaId(id);
+        Boya boya = traerById(id);
         if(boya!=null){
             boya.setColorLuz(colorLuz);
             guardarBoya(boya);

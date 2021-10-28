@@ -39,10 +39,20 @@ public class BoyaController {
     }
 
     @GetMapping("/boyas/{id}") // que devuelva la info de una boya en particular(SIN las muestras)
-    public ResponseEntity<Boya> buscarBoyaId(@PathVariable Integer id) {
-        Boya boya = service.buscarBoyaId(id);
+    public ResponseEntity<?> traerById(@PathVariable Integer boyaId) {
+        if (service.traerById(boyaId) == null) {
 
-        return ResponseEntity.ok(boya);
+            GenericResponse respuesta = new GenericResponse();
+            respuesta.isOk = false;
+            respuesta.message = "El id ingresado no corresponde a ninguna boya.";
+
+            return ResponseEntity.badRequest().body(respuesta);
+
+        } else {
+
+            return ResponseEntity.ok(service.traerById(boyaId));
+
+        }
     }
 
     @PutMapping("/boyas/{id}") // actualice SOLO el color de luz de la boya. El request esperado será:

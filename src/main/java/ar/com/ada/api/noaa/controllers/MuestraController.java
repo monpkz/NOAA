@@ -10,16 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.ada.api.noaa.entities.Boya;
 import ar.com.ada.api.noaa.entities.Muestra;
 import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
 import ar.com.ada.api.noaa.models.response.MuestraResponse;
+import ar.com.ada.api.noaa.services.BoyaService;
 import ar.com.ada.api.noaa.services.MuestraService;
 
 @RestController
 public class MuestraController {
+
     @Autowired
     MuestraService service;
+
+    @Autowired
+    BoyaService boyaService;
 
     @PostMapping("/muestras") // que registre una muestra
     public ResponseEntity<MuestraResponse> crearMuestra(@RequestBody InfoMuestraNueva InfoMuestra) {
@@ -36,15 +42,17 @@ public class MuestraController {
     }
 
     @GetMapping("/muestras/boyas/{idBoya}") // devuelva la lista de muestras de una boya por ID
-    public ResponseEntity<?> traerTodasMuestras(@PathVariable Integer boyaId) {
+    public ResponseEntity<?> traerTodasMuestras(@PathVariable Integer idBoya) {
         GenericResponse respuesta = new GenericResponse();
-        if (service.traerTodasMuestras(boyaId) != null) {
-            return ResponseEntity.ok(service.traerTodasMuestras(boyaId));
-        } else {
+        Boya boya = boyaService.traerById(idBoya);
+
+        if (boya == null) {
             respuesta.isOk = false;
-            respuesta.id = boyaId;
-            respuesta.message = "No existe el Id ingresado";
+            respuesta.message = "No existe el Id Boya ingresado.";
             return ResponseEntity.badRequest().body(respuesta);
+            
+        } else {            
+            return ResponseEntity.ok(service.traerTodasMuestras(idBoya));
         }
 
     }

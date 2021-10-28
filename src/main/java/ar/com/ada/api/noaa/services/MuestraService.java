@@ -24,7 +24,7 @@ public class MuestraService {
     public Muestra crearMuestra(Integer boyaId, Date horarioMuestra, String matriculaEmbarcacion, Double latitud,
             Double longitud, Double alturaNivelMar) {
         Muestra muestra = new Muestra();
-        Boya boya = boyaService.buscarBoyaId(boyaId);
+        Boya boya = boyaService.traerById(boyaId);
         muestra.setBoya(boya);
         muestra.setHorarioMuestra(horarioMuestra);
         muestra.setMatriculaEmbarcacion(matriculaEmbarcacion);
@@ -38,7 +38,7 @@ public class MuestraService {
     }
 
     public List<Muestra> traerTodasMuestras(Integer boyaId){
-        Boya boya = boyaService.buscarBoyaId(boyaId);
+        Boya boya = boyaService.traerById(boyaId);
         if (boya!=null){
             return boya.getMuestras();
         } else
@@ -90,7 +90,7 @@ public class MuestraService {
     }
 
     public Muestra MuestraAlturaMinima(Integer idBoya) {
-        Boya boya = boyaService.buscarBoyaId(idBoya);
+        Boya boya = boyaService.traerById(idBoya);
              
         Muestra muestraMinima = boya.getMuestras().get(0);  
 
