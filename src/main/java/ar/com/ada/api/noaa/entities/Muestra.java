@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Table(name = "muestra")
 public class Muestra {
 
+    public static final Date HorarioMuestra = null;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "muestra_id")
@@ -49,11 +51,11 @@ public class Muestra {
     }// Nota 1: una boya genera varias muestras, y una muestra corresponde solo a una
      // boya.
 
-    public Date getHorario() {
+    public Date getHorarioMuestra() {
         return horarioMuestra;
     }
 
-    public void setHorario(Date horarioMuestra) {
+    public void setHorarioMuestra(Date horarioMuestra) {
         this.horarioMuestra = horarioMuestra;
     }
 

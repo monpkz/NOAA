@@ -1,51 +1,99 @@
 package ar.com.ada.api.noaa.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.ada.api.noaa.entities.Muestra;
+import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
+import ar.com.ada.api.noaa.models.response.GenericResponse;
+import ar.com.ada.api.noaa.models.response.MuestraResponse;
+import ar.com.ada.api.noaa.services.MuestraService;
 
+@RestController
+public class MuestraController {
+    @Autowired
+    MuestraService service;
 
+    @PostMapping("/muestras") // que registre una muestra
+    public ResponseEntity<MuestraResponse> crearMuestra(@RequestBody InfoMuestraNueva InfoMuestra) {
+        MuestraResponse respuestaMuestra = new MuestraResponse();
 
+        Muestra muestra = service.crearMuestra(InfoMuestra.boyaId, InfoMuestra.horarioMuestra,
+                InfoMuestra.matriculaEmbarcacion, InfoMuestra.latitud, InfoMuestra.longitud,
+                InfoMuestra.alturaNivelMar);
 
+        respuestaMuestra.id = muestra.getMuestraId();
+        respuestaMuestra.color = service.colorMuestra(muestra);
 
+        return ResponseEntity.ok(respuestaMuestra);
+    }
 
+    @GetMapping("/muestras/boyas/{idBoya}") // devuelva la lista de muestras de una boya por ID
+    public ResponseEntity<?> traerTodasMuestras(@PathVariable Integer boyaId) {
+        GenericResponse respuesta = new GenericResponse();
+        if (service.traerTodasMuestras(boyaId) != null) {
+            return ResponseEntity.ok(service.traerTodasMuestras(boyaId));
+        } else {
+            respuesta.isOk = false;
+            respuesta.id = boyaId;
+            respuesta.message = "No existe el Id ingresado";
+            return ResponseEntity.badRequest().body(respuesta);
+        }
 
-//@RestController
-//public class MuestraController {
+    }
+
+    // Reseteara el color de la boya a “AZUL” a partir de una muestra
+    @DeleteMapping("/muestras/{id}") 
+    public ResponseEntity<GenericResponse> resetearColorBoya(@PathVariable Integer id) {
+        GenericResponse respuesta = new GenericResponse();
+        
+        if (service.resetearColorBoya(id)) {
+            respuesta.isOk = true;
+            respuesta.id = id;
+            respuesta.message = "Color de boya reseteado con éxito.";
+
+            return ResponseEntity.ok(respuesta);
+        } else {
+            respuesta.isOk = false;
+            respuesta.id = id;
+            respuesta.message = "El id de muestra no exite.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        }
+    }
+}
+
+// BONUS1/2
 /*
-@PostMapping("/muestra") // que registre una muestra
-public SomeEnityData postMethodName(@RequestBody SomeEnityData entity) {
-    //TODO: process POST request
-    
-    return entity;
-}
+ * ue devuelva la lista de muestras de un color en el siguiente formato JSON
+ * Array")
+ */
+//// @GetMapping("/muestras/colores/{color}")
 
-@GetMapping("/muestras/boyas/{idBoya}") //devuelva la lista de muestras de una boya por ID
-public SomeData getMethodName(@RequestParam String param) {
-    return new SomeData();
-}
+/*
+ * : que devuelva la muestra donde la altura nivel del mar sea la minima para
+ * una boya en particular particular en este formato JSON(informar el horario en
+ * que ocurrió)
+ */
+// @GetMapping("/muestras/minima/{idBoya}")
 
-@DeleteMapping("/muestras/{id}") //Reseteara el color de la boya a “AZUL” a partir de una muestra
-
-//BONUS1/2
-/*ue devuelva la lista de muestras de un color en el siguiente 
-formato JSON Array")*/
-////@GetMapping("/muestras/colores/{color}")
-
-/*: que devuelva la muestra donde la altura nivel del mar sea la 
-minima para una boya en particular particular en este formato JSON(informar el horario en que 
-ocurrió)*/
-//@GetMapping("/muestras/minima/{idBoya}")
-
-//EPICBONUS
-/*se ha comenzado a hacer un plan de contingencia para los casos que seamos atacados por 
-Monstruos Gigantes o Naves Alienígenas marítimas. Lo que NOAA está pidiendo es armar un 
-sistema de alerta que nos avise si una anomalía ha sucedido con las boyas. Este sistema deberá 
-devolver un resultado diferente dependiendo de las siguientes consignas:
-A) Para una boya en particular, si se mantuvo en un lapso de 10 minutos a niveles de 
-200metros absolutos(o sea -200 o +200) por 10 minutos, ALERTA DE KAIJU (Monstruo 
-Gigante como GODZILLA)
-B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la diferencia de altura 
-entre ambas es de +500 : ALERTA DE IMPACTO (Posible meteorito o Nave Alienígena que 
-da brincos en el agua)*/
+// EPICBONUS
+/*
+ * se ha comenzado a hacer un plan de contingencia para los casos que seamos
+ * atacados por Monstruos Gigantes o Naves Alienígenas marítimas. Lo que NOAA
+ * está pidiendo es armar un sistema de alerta que nos avise si una anomalía ha
+ * sucedido con las boyas. Este sistema deberá devolver un resultado diferente
+ * dependiendo de las siguientes consignas: A) Para una boya en particular, si
+ * se mantuvo en un lapso de 10 minutos a niveles de 200metros absolutos(o sea
+ * -200 o +200) por 10 minutos, ALERTA DE KAIJU (Monstruo Gigante como GODZILLA)
+ * B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la
+ * diferencia de altura entre ambas es de +500 : ALERTA DE IMPACTO (Posible
+ * meteorito o Nave Alienígena que da brincos en el agua)
+ */
 // @GetMapping("api/muestras/anomalias/{idBoya}")
-
-

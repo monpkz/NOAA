@@ -8,4 +8,6 @@ import ar.com.ada.api.noaa.entities.Muestra;
 @Repository
 public interface MuestraRepository extends JpaRepository<Muestra, Integer>{
 
+    Muestra findBymuestraId(Integer id);
+
 }

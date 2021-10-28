@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class InfoMuestraNueva {
     public Integer boyaId;
-    public Date horario;
+    public Date horarioMuestra;
     public String matriculaEmbarcacion;
     public Double latitud;
     public Double longitud;
