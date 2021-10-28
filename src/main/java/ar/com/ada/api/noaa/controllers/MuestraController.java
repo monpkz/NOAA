@@ -1,5 +1,8 @@
 package ar.com.ada.api.noaa.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import ar.com.ada.api.noaa.entities.Boya;
 import ar.com.ada.api.noaa.entities.Muestra;
 import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
+import ar.com.ada.api.noaa.models.response.MuestraPorColor;
 import ar.com.ada.api.noaa.models.response.MuestraResponse;
 import ar.com.ada.api.noaa.services.BoyaService;
 import ar.com.ada.api.noaa.services.MuestraService;
@@ -50,18 +54,18 @@ public class MuestraController {
             respuesta.isOk = false;
             respuesta.message = "No existe el Id Boya ingresado.";
             return ResponseEntity.badRequest().body(respuesta);
-            
-        } else {            
+
+        } else {
             return ResponseEntity.ok(service.traerTodasMuestras(idBoya));
         }
 
     }
 
     // Reseteara el color de la boya a “AZUL” a partir de una muestra
-    @DeleteMapping("/muestras/{id}") 
+    @DeleteMapping("/muestras/{id}")
     public ResponseEntity<GenericResponse> resetearColorBoya(@PathVariable Integer id) {
         GenericResponse respuesta = new GenericResponse();
-        
+
         if (service.resetearColorBoya(id)) {
             respuesta.isOk = true;
             respuesta.id = id;
@@ -75,14 +79,19 @@ public class MuestraController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         }
     }
-}
 
-// BONUS1/2
-/*
- * ue devuelva la lista de muestras de un color en el siguiente formato JSON
- * Array")
- */
-//// @GetMapping("/muestras/colores/{color}")
+    // BONUS1/2
+    /*
+     * ue devuelva la lista de muestras de un color en el siguiente formato JSON
+     * Array")
+     */
+    @GetMapping("/muestras/colores/{color}")
+    public ResponseEntity<List<MuestraPorColor>> muestraColor(@PathVariable String color) {
+
+        return ResponseEntity.ok(service.traerMuestrasPorColor(color.toUpperCase()));
+    }
+
+}
 
 /*
  * : que devuelva la muestra donde la altura nivel del mar sea la minima para

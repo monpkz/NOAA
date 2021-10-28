@@ -71,8 +71,8 @@ public class Muestra {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
+    public void setLongitud(Double i) {
+        this.longitud = i;
     }
 
     public Double getLatitud() {

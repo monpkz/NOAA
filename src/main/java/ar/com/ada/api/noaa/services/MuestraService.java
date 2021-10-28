@@ -81,9 +81,7 @@ public class MuestraService {
                 muestraPorColor.alturaNivelDelMar=muestra.getAlturaNivelMar();                            
                 
                 muestrasPorColor.add(muestraPorColor);
-                
             }            
-
         }
         return muestrasPorColor;
         

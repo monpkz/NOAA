@@ -38,6 +38,10 @@ public class BoyaService {
         return repo.findByBoyaId(boyaId);
     }
 
+    public List<Boya> traerByColor(String color) {
+        return repo.findByColorLuz(color);
+    }
+
     public boolean actualizarBoyaColor(Integer id, String colorLuz) {
 
         Boya boya = traerById(id);
