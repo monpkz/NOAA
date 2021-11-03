@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.ada.api.noaa.entities.Boya;
 import ar.com.ada.api.noaa.entities.Muestra;
 import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
-import ar.com.ada.api.noaa.models.response.AnomaliaResponse;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
 import ar.com.ada.api.noaa.models.response.MuestraMinimaResponse;
 import ar.com.ada.api.noaa.models.response.MuestraPorColor;
@@ -108,25 +107,5 @@ public class MuestraController {
 
         return ResponseEntity.ok(muestraMinimaResponse);
     }
-
-    // EPICBONUS
-    /*
-     * se ha comenzado a hacer un plan de contingencia para los casos que seamos
-     * atacados por Monstruos Gigantes o Naves Alienígenas marítimas. Lo que NOAA
-     * está pidiendo es armar un sistema de alerta que nos avise si una anomalía ha
-     * sucedido con las boyas. Este sistema deberá devolver un resultado diferente
-     * dependiendo de las siguientes consignas: A) Para una boya en particular, si
-     * se mantuvo en un lapso de 10 minutos a niveles de 200metros absolutos(o sea
-     * -200 o +200) por 10 minutos, ALERTA DE KAIJU (Monstruo Gigante como GODZILLA)
-     * B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la
-     * diferencia de altura entre ambas es de +500 : ALERTA DE IMPACTO (Posible
-     * meteorito o Nave Alienígena que da brincos en el agua)
-     
-    @GetMapping("/muestras/anomalias/{idBoya}")
-    public ResponseEntity<AnomaliaResponse> obtenerAnomalia(@PathVariable Integer idBoya){
-        
-        return ResponseEntity.ok(service.alertaImpacto(idBoya));
-    }*/
-
 
 }
