@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.ada.api.noaa.entities.Boya;
 import ar.com.ada.api.noaa.entities.Muestra;
 import ar.com.ada.api.noaa.models.request.InfoMuestraNueva;
+import ar.com.ada.api.noaa.models.response.AnomaliaResponse;
 import ar.com.ada.api.noaa.models.response.GenericResponse;
 import ar.com.ada.api.noaa.models.response.MuestraMinimaResponse;
 import ar.com.ada.api.noaa.models.response.MuestraPorColor;
@@ -92,11 +93,9 @@ public class MuestraController {
         return ResponseEntity.ok(service.traerMuestrasPorColor(color.toUpperCase()));
     }
 
-    /*
-     * : que devuelva la muestra donde la altura nivel del mar sea la minima para
-     * una boya en particular en este formato JSON(informar el horario en
-     * que ocurrió)
-     */
+    
+     // que devuelva la muestra donde la altura nivel del mar sea la minima 
+    
     @GetMapping("/muestras/minima/{idBoya}")
     public ResponseEntity<MuestraMinimaResponse> muestraAlturaMinima(@PathVariable Integer idBoya){
         Muestra muestraMinima= service.MuestraAlturaMinima(idBoya);
@@ -122,7 +121,12 @@ public class MuestraController {
      * B) Para una boya en particular, si se tuvo 2 muestras seguidas donde la
      * diferencia de altura entre ambas es de +500 : ALERTA DE IMPACTO (Posible
      * meteorito o Nave Alienígena que da brincos en el agua)
-     */
-    // @GetMapping("api/muestras/anomalias/{idBoya}")
+     
+    @GetMapping("/muestras/anomalias/{idBoya}")
+    public ResponseEntity<AnomaliaResponse> obtenerAnomalia(@PathVariable Integer idBoya){
+        
+        return ResponseEntity.ok(service.alertaImpacto(idBoya));
+    }*/
+
 
 }
